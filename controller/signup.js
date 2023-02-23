@@ -1,4 +1,5 @@
 const bcrypt=require('bcrypt')
+const jwt =require('jsonwebtoken')
 const User = require('../model/signup')
 
 function isstringvalidate(str) {
@@ -9,8 +10,13 @@ function isstringvalidate(str) {
         return false
     }
 }
+
+function generateToken(id){
+    return jwt.sign({userId:id},"ThisIsAsecretKeyToEncrpytUserIdForSecureTheDataToHackedWriteAnyThing")
+}
+
 const signUp = async (req, res, next) => {
-    try {
+    try{
         const { Name, Number, Email, Password } = req.body;
 
         if (isstringvalidate(Name) || isstringvalidate(Email) || isstringvalidate(Password)) {
@@ -22,19 +28,19 @@ const signUp = async (req, res, next) => {
             res.status(201).json({ err: "signUp successfully" })
         })
     }
-    catch (err) {
+    catch(err){
         res.status(500).json({ err: "something went wrong" })
     }
 }
 
-const isUser = async (req, res, next) => {
+const login = async (req, res, next) => {
     try {
         const { Email, Password } = req.body
         const isData = await User.findAll({ where: { Email: Email } })
         if (isData){
             bcrypt.compare(Password,isData[0].Password,(err,result)=>{
                 if(result==true){
-                    return res.status(200).json({ message: "User Logged in succesfully" })
+                    return res.status(200).json({ message: "User Logged in succesfully",token:generateToken(isData[0].id) })
                 }
                 else{
                     return res.status(401).json({ message: "password mismatch" })
@@ -50,5 +56,5 @@ const isUser = async (req, res, next) => {
 }
 module.exports = {
     signUp: signUp,
-    isUser: isUser
+    isUser: login
 }
