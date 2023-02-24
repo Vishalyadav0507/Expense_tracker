@@ -13,7 +13,8 @@
 </head>
 <body>
     <div class="container" >
-    <form class="card" style="margin-top: 30px; padding: 45px;" method="post" onsubmit="addItem(event)">
+        <a href="./login.html">logout</a>
+        <form class="card" style="margin-top: 30px; padding: 45px;" method="post" onsubmit="addItem(event)">
         <label for="">Enter Expense amount</label>
         <input type="number" id="Number">
         <label for="">Expense Description:-</label>
@@ -26,6 +27,9 @@
         </select>
         <button type="submit">add expense</button>
     </form>
+    <div><h5 id="message" ></h5></div>
+        <button id="rzp-button">Buy Premium</button>
+        <script src = "https://checkout.razorpay.com/v1/checkout.js"></script>
     <h2>your expenses</h2>
     <ul id="itemList" ></ul>
 </div>

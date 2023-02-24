@@ -6,9 +6,11 @@ const bodyParser = require('body-parser')
 const sequelize=require('./util/datbase')
 const signUpRoute=require('./route/signup')
 const expenseRoute=require('./route/expense')
+const purchaseRoute=require('./route/purchase')
 
 const User=require('./model/signup')
 const Expense=require('./model/expense')
+const Order=require('./model/order')
 
 const app=express()
 app.use(cors())
@@ -19,9 +21,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 User.hasMany(Expense)
 Expense.belongsTo(User)
 
+User.hasMany(Order)
+Order.belongsTo(User)
 
 app.use(signUpRoute)
 app.use(expenseRoute)
+app.use(purchaseRoute)
 
 sequelize.sync()
 .then(result=>{

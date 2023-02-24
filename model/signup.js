@@ -23,7 +23,8 @@ const User=sequelize.define('user',{
       Password:{
         type:Sequelize.STRING,
         allowNull:false
-      }
+      },
+      ispremium:Sequelize.BOOLEAN
 })
 
 module.exports=User
