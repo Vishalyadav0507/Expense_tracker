@@ -11,14 +11,13 @@ function isstringvalidate(str) {
     }
 }
 
-function generateToken(id){
-    return jwt.sign({userId:id},"ThisIsAsecretKeyToEncrpytUserIdForSecureTheDataToHackedWriteAnyThing")
+function generateToken(id,name,ispremium){
+    return jwt.sign({userId:id,name:name,ispremium:ispremium},"ThisIsAsecretKeyToEncrpytUserIdForSecureTheDataToHackedWriteAnyThing")
 }
 
 const signUp = async (req, res, next) => {
     try{
         const { Name, Number, Email, Password } = req.body;
-
         if (isstringvalidate(Name) || isstringvalidate(Email) || isstringvalidate(Password)) {
             return res.status(400).json({ err: "something is missing" })
         }
@@ -40,7 +39,7 @@ const login = async (req, res, next) => {
         if (isData){
             bcrypt.compare(Password,isData[0].Password,(err,result)=>{
                 if(result==true){
-                    return res.status(200).json({ message: "User Logged in succesfully",token:generateToken(isData[0].id) })
+                    return res.status(200).json({ message: "User Logged in succesfully",token:generateToken(isData[0].id,isData[0].Name,isData[0].ispremium) })
                 }
                 else{
                     return res.status(401).json({ message: "password mismatch" })
@@ -56,5 +55,6 @@ const login = async (req, res, next) => {
 }
 module.exports = {
     signUp: signUp,
-    isUser: login
+    isUser: login,
+    generateToken:generateToken
 }
