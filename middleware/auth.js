@@ -5,9 +5,10 @@ const authenticate=(req,res,next)=>{
     try{
         const token = req.header('authentication')
         const user=jwt.verify(token,"ThisIsAsecretKeyToEncrpytUserIdForSecureTheDataToHackedWriteAnyThing")
-        console.log("userid",user.userId)
+
         User. findByPk(user.userId).then(user=>{
             req.user=user
+            
             next()
         })
         .catch(err=>{

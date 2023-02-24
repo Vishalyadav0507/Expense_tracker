@@ -41,6 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (decoded.ispremium) {
         document.getElementById('rzp-button').style.visibility = "hidden"
         document.getElementById('message').innerHTML = `<h5>you are primum user</h5>`
+        showLeaderBoard()
     }
 
     axios.get('http://localhost:3000/expense/getItem', { headers: { "authentication": token } })
@@ -80,9 +81,29 @@ document.getElementById('rzp-button').onclick = async function (e) {
             document.getElementById('rzp-button').style.visibility = "hidden"
             document.getElementById('message').innerHTML = `<h5>you are primum user</h5>`
             localStorage.setItem('token', res.data.token)
+            showLeaderBoard()
         }
     }
     const rzp1 = new Razorpay(option)
     rzp1.open();
     e.preventDefault()
+}
+
+function showLeaderBoard(){
+    
+    const inputElement=document.createElement('input')
+    inputElement.type='button'
+    inputElement.value='show leaderboard'
+    inputElement.onclick=async ()=>{
+        const token=localStorage.getItem('token')
+        const response= await axios.get('http://localhost:3000/premium/leaderboard', { headers: { "authentication": token } })
+       
+        const leaderboard=document.getElementById('leaderboard')
+        leaderboard.innerHTML=`<h5> leader board</h5>`
+
+        response.data.forEach((userDetails)=>{
+            leaderboard.innerHTML+=`<li>Name - ${userDetails.Name} total amount-${userDetails.amount}</li>`
+        })
+    }
+    document.getElementById('message').appendChild(inputElement)
 }

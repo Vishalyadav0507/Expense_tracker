@@ -7,6 +7,7 @@ const sequelize=require('./util/datbase')
 const signUpRoute=require('./route/signup')
 const expenseRoute=require('./route/expense')
 const purchaseRoute=require('./route/purchase')
+const premiumRoute=require('./route/premiumFeatures')
 
 const User=require('./model/signup')
 const Expense=require('./model/expense')
@@ -27,6 +28,7 @@ Order.belongsTo(User)
 app.use(signUpRoute)
 app.use(expenseRoute)
 app.use(purchaseRoute)
+app.use(premiumRoute)
 
 sequelize.sync()
 .then(result=>{
