@@ -102,7 +102,7 @@ function showLeaderBoard(){
         leaderboard.innerHTML=`<h5> leader board</h5>`
 
         response.data.forEach((userDetails)=>{
-            leaderboard.innerHTML+=`<li>Name - ${userDetails.Name} total amount-${userDetails.amount}</li>`
+            leaderboard.innerHTML+=`<li>Name - ${userDetails.name} total amount-${userDetails.total_expenses}</li>`
         })
     }
     document.getElementById('message').appendChild(inputElement)
