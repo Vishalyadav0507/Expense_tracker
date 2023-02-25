@@ -12,7 +12,7 @@ const authenticate=(req,res,next)=>{
             next()
         })
         .catch(err=>{
-            req.status(500).json({err:err})
+            res.status(500).json({err:err})
         })
     }
     catch(err){
