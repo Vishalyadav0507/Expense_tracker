@@ -1,3 +1,5 @@
+
+
 async function addItem(e) {
     try {
         e.preventDefault()
@@ -79,6 +81,7 @@ document.getElementById('rzp-button').onclick = async function (e) {
             console.log("respone",res)
             alert('you are premium user now')
             document.getElementById('rzp-button').style.visibility = "hidden"
+            document.getElementById('download').style.visibility = "visible"
             document.getElementById('message').innerHTML = `<h5>you are primum user</h5>`
             localStorage.setItem('token', res.data.token)
             showLeaderBoard()
@@ -106,4 +109,21 @@ function showLeaderBoard(){
         })
     }
     document.getElementById('message').appendChild(inputElement)
+}
+
+async function download(){
+    axios.get('http:/localhost//:3000/user/download',{headers:{"authentication":token}})
+    .then((response)=>{
+        if(response.status==201){
+            var a = document.createElement("a");
+            a.href = response.data.fileUrl;
+            a.download = 'myexpense.csv';
+            a.click();
+        } else {
+            throw new Error(response.data.message)
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 }
