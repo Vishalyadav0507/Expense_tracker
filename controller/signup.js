@@ -21,13 +21,26 @@ const signUp = async (req, res, next) => {
         if (isstringvalidate(Name) || isstringvalidate(Email) || isstringvalidate(Password)) {
             return res.status(400).json({ err: "something is missing" })
         }
-        const saltRounds=10;
-        bcrypt.hash(Password,saltRounds,async(err,hash)=>{
+        const findEmail=await User.findAll({where:{Email:Email}})
+        console.log("hiii",findEmail)
+        // if(findEmail.length>0){
+        //     const saltRounds=10;
+        //     bcrypt.hash(Password,saltRounds,async(err,hash)=>{
+        //     await User.create({ Name, Number, Email, Password:hash})
+        //     res.status(201).json({ message: "signUp successfully" })
+        // })
+        // }else{
+        //     res.status(401).json({err:"user already registered"})
+        // }
+            const saltRounds=10;
+            bcrypt.hash(Password,saltRounds,async(err,hash)=>{
             await User.create({ Name, Number, Email, Password:hash})
-            res.status(201).json({ err: "signUp successfully" })
+            res.status(201).json({ message: "signUp successfully" })
         })
+
     }
     catch(err){
+        console.log("something>>>",err)
         res.status(500).json({ err: "something went wrong" })
     }
 }

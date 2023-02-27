@@ -1,7 +1,11 @@
 const express=require('express')
 const router=express.Router()
-const controller=require('../controller/forgotPassword')
+const resetpasswordController=require('../controller/resetPassword')
 
-router.use('/password/forgotpassword',controller.forgotPassword)
+router.get('/password/updatepassword/:resetpasswordid', resetpasswordController.updatepassword)
 
-module.exports=router
+router.get('/password/resetpassword/:id', resetpasswordController.resetpassword)
+
+router.use('/password/forgotpassword', resetpasswordController.forgotpassword)
+
+module.exports = router;
