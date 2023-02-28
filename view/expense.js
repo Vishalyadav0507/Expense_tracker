@@ -93,7 +93,7 @@ document.getElementById('rzp-button').onclick = async function (e) {
 }
 
 function showLeaderBoard(){
-    
+    document.getElementById('download').style.visibility = "visible"
     const inputElement=document.createElement('input')
     inputElement.type='button'
     inputElement.value='show leaderboard'
@@ -112,13 +112,16 @@ function showLeaderBoard(){
 }
 
 async function download(){
-    axios.get('http:/localhost//:3000/user/download',{headers:{"authentication":token}})
+    const token=localStorage.getItem('token')
+    axios.get('http://localhost:3000/expense/download',{headers:{"authentication":token}})
     .then((response)=>{
         if(response.status==201){
             var a = document.createElement("a");
             a.href = response.data.fileUrl;
-            a.download = 'myexpense.csv';
+            a.download = 'myexpense.txt';
             a.click();
+            alert("download successfully")
+
         } else {
             throw new Error(response.data.message)
         }

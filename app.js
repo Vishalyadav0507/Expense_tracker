@@ -17,6 +17,7 @@ const User=require('./model/signup')
 const Expense=require('./model/expense')
 const Order=require('./model/order')
 const Forgotpassword = require('./model/forgotPassword');
+const fileTable=require('./model/filestable')
 
 const app=express()
 app.use(cors())
@@ -33,11 +34,16 @@ Order.belongsTo(User)
 User.hasMany(Forgotpassword);
 Forgotpassword.belongsTo(User);
 
+User.hasMany(fileTable)
+fileTable.belongsTo(User)
+
 app.use(signUpRoute)
 app.use(expenseRoute)
 app.use(purchaseRoute)
 app.use(premiumRoute)
 app.use(forgotPasswordRoute)
+
+
 // app.use('/password', resetPasswordRoutes)
 
 sequelize.sync()

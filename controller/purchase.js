@@ -40,8 +40,9 @@ const updatetransaction = async(req,res,next) => {
         const promise2= req.user.update({ ispremium: true })
         Promise.all([promise1,promise2]).then((result)=>{
             const k= controller.generateToken(userId,req.user.Name,true)
+            console.log('k>>>>',k)
             console.log("responmse>>>>",result)
-            res.status(205).json({message:"transaction successfull",token:k})
+            return res.status(201).json({success:true,message:'transaction successfull',token:k})
         }).catch((err)=>{
             console.log(err)
         })
