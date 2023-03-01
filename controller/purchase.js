@@ -1,17 +1,13 @@
 const razorpay = require('razorpay')
-// const jwt=require('jsonwebtoken')
 const Order = require('../model/order')
 const controller=require("../controller/signup")
 
-// function generateToken(id,name,ispremium){
-//     return jwt.sign({userId:id,name:name,ispremium:ispremium},"ThisIsAsecretKeyToEncrpytUserIdForSecureTheDataToHackedWriteAnyThing")
-// }
 
 const premimumMemberShip = async (req, res, next) => {
     try {
         var rzp = new razorpay({
-            key_id: "rzp_test_K0GcHulsKq0ogG",
-            key_secret: "UEonurt1VgjOii1hKhB4eiRr"
+            key_id: process.env.key_id,
+            key_secret:process.env.key_secret,
         })
         const amount = 2500
 
