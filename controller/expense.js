@@ -2,9 +2,9 @@
 const expense = require('../model/expense')
 const User = require('../model/signup')
 const sequelize = require('../util/datbase')
-const UserServices=require('../services/userServices')
-const S3Services=require('../services/s3services')
-const fileTable=require('../model/filestable')
+const UserServices = require('../services/userServices')
+const S3Services = require('../services/s3services')
+const fileTable = require('../model/filestable')
 
 
 const download = async (req, res) => {
@@ -14,9 +14,10 @@ const download = async (req, res) => {
         const stringified = JSON.stringify(expenses);
         const fileName = `expense${req.user.id}/${new Date()}.txt`;
 
-        const fileURL = await S3Services.uploadS3(stringified,fileName)
-        fileTable.create({link:fileURL,userId:req.user.id})
+        const fileURL = await S3Services.uploadS3(stringified, fileName)
+        fileTable.create({ link: fileURL, userId: req.user.id })
         res.status(201).json({ fileURL, success: true })
+
     } catch (err) {
         res.status(401).json({ success: false, err: err })
     }
@@ -34,8 +35,11 @@ const postItem = async (req, res, next) => {
             total_amount: totalExpense
         }, { where: { Id: req.user.id } },
             { transaction: t })
+
         await t.commit()
+        
         res.status(201).json({ expense: Expense })
+
     } catch (err) {
         await t.rollback()
         res.status(501).json({ err: "something went wrong" })
@@ -44,8 +48,25 @@ const postItem = async (req, res, next) => {
 
 const getItem = async (req, res) => {
     try {
+
+        const page = +req.query.page || 1;
+        const limit = +req.query.limit || 3
+
+        const expenses = await expense.findAll({
+            where: { userId: req.user.id }, offset: (page - 1) * limit,
+            limit: limit,
+        })
+
         const allData = await expense.findAll({ where: { userId: req.user.id } })
-        res.status(201).json({ expense: allData })
+        console.log('lenth>>>', allData.length)
+
+        res.status(201).json({
+            expense: expenses, hasnextpage: (limit * page < allData.length),
+            nextpage: page + 1,
+            currentpage: page,
+            haspreviouspage: page > 1,
+            previouspage: page - 1
+        })
     }
     catch (err) {
         console.log(err)
