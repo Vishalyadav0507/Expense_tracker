@@ -1,12 +1,14 @@
 const express =require('express');
 const path=require('path');
 const fs=require('fs')
+
 const cors=require('cors');
 const bodyParser = require('body-parser');
 const helmet=require('helmet');
 const compression=require('compression');
 const morgan =require('morgan')
 const dotenv = require('dotenv');
+
 dotenv.config();
 
 const sequelize=require('./util/datbase');
@@ -27,6 +29,7 @@ const app=express();
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+
 const accessData=fs.createWriteStream(path.join(__dirname,"access.log"),{flags:'a'})
 app.use(morgan('combined',{stream:accessData}))
 
