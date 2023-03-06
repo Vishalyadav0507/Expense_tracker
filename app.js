@@ -56,7 +56,7 @@ app.use(premiumRoute)
 app.use(forgotPasswordRoute)
 
 app.use((req,res)=>{
-    res.sendFile(path.join(__dirname,`view${req.url}`))
+    res.sendFile(path.join(__dirname,`frontend${req.url}`))
 })
 
 
