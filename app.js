@@ -55,6 +55,10 @@ app.use(purchaseRoute)
 app.use(premiumRoute)
 app.use(forgotPasswordRoute)
 
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`frontend${req.url}`))
+})
+
 
 // app.use('/password', resetPasswordRoutes)
 

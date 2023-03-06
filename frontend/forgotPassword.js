@@ -3,5 +3,5 @@ async function forgotPassword(e){
     const data={
         email:e.target.Email.value
     }
-    const response=await axios.post('http://localhost:3000/password/forgotpassword',data)
+    const response=await axios.post('http://52.66.116.43:3000/password/forgotpassword',data)
 }

@@ -9,8 +9,7 @@ async function signup(e) {
             Email: e.target.Email.value,
             Password: e.target.Password.value,
         }
-        console.log(signUpData)
-        const response = await axios.post('http://localhost:3000/user/signup', signUpData)
+        const response = await axios.post('http://52.66.116.43:3000/user/signup', signUpData)
         if (response.status === 201) {
             alert('signUp successfully')
             window.location.href = './login.html'

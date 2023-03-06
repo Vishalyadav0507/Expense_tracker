@@ -8,7 +8,7 @@ async function addItem(e) {
             Item: e.target.item.value
         }
         const token = localStorage.getItem('token')
-        const response = await axios.post('http://localhost:3000/expense/addItem', Item, { headers: { "authentication": token } })
+        const response = await axios.post('http://52.66.116.43:3000/expense/addItem', Item, { headers: { "authentication": token } })
         showOnScreen(response.data.expense)
     } catch (err) {
         document.body.innerHTML += `<div>${err}</div>`
@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('rzp-button').style.visibility = "hidden"
     }
 
-    axios.get(`http://localhost:3000/expense/getItem?page=${page}&limit=${limit}`, { headers: { "authentication": token } })
+    axios.get(`http://52.66.116.43:3000/expense/getItem?page=${page}&limit=${limit}`, { headers: { "authentication": token } })
         .then((response) => {
             for (var i = 0; i < response.data.expense.length; i++) {
                 showOnScreen(response.data.expense[i])
@@ -87,7 +87,7 @@ function showPage({
 function getExpenses(page) {
     const limit = localStorage.getItem('limit')
     const token = localStorage.getItem('token')
-    axios.get(`http://localhost:3000/expense/getItem?page=${page}&limit=${limit}`, { headers: { "authentication": token } })
+    axios.get(`http://52.66.116.43:3000/expense/getItem?page=${page}&limit=${limit}`, { headers: { "authentication": token } })
         .then((response) => {
             console.log(response)
             for(var i=0;i<response.data.expense.length;i++){
@@ -100,7 +100,7 @@ function getExpenses(page) {
 
 function deleteItem(itemId) {
     const token = localStorage.getItem('token')
-    axios.delete(`http://localhost:3000/expense/deleteItem/${itemId}`, { headers: { "authentication": token } })
+    axios.delete(`http://52.66.116.43:3000/expense/deleteItem/${itemId}`, { headers: { "authentication": token } })
         .then((response) => {
             if (response.status === 201) {
                 const parentNode = document.getElementById('itemList')
@@ -113,13 +113,13 @@ function deleteItem(itemId) {
 
 document.getElementById('rzp-button').onclick = async function (e) {
     const token = localStorage.getItem('token')
-    const response = await axios.get('http://localhost:3000/purchase/buyPremium', { headers: { "authentication": token } })
+    const response = await axios.get('http://52.66.116.43:3000/purchase/buyPremium', { headers: { "authentication": token } })
 
     var option = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async function (response) {
-            const res = await axios.post('http://localhost:3000/purchase/updatetransaction', {
+            const res = await axios.post('http://52.66.116.43:3000/purchase/updatetransaction', {
                 order_id: option.order_id,
                 payment_id: response.razorpay_payment_id
             }, { headers: { "authentication": token } })
@@ -144,7 +144,7 @@ function showLeaderBoard() {
     inputElement.value = 'show leaderboard'
     inputElement.onclick = async () => {
         const token = localStorage.getItem('token')
-        const response = await axios.get('http://localhost:3000/premium/leaderboard', { headers: { "authentication": token } })
+        const response = await axios.get('http://52.66.116.43:3000/premium/leaderboard', { headers: { "authentication": token } })
 
         const leaderboard = document.getElementById('leaderboard')
         leaderboard.innerHTML = `<h5> leader board</h5>`
@@ -158,7 +158,7 @@ function showLeaderBoard() {
 
 async function download() {
     const token = localStorage.getItem('token')
-    axios.get('http://localhost:3000/expense/download', { headers: { "authentication": token } })
+    axios.get('http://52.66.116.43:3000/expense/download', { headers: { "authentication": token } })
         .then((response) => {
             if (response.status == 201) {
                 var a = document.createElement("a");
