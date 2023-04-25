@@ -6,7 +6,7 @@ const controller=require("../controller/signup")
 const premimumMemberShip = async (req, res, next) => {
     try {
         var rzp = new razorpay({
-            key_id: process.env.key_id,
+            key_id:process.env.key_id,
             key_secret:process.env.key_secret,
         })
         const amount = 2500
@@ -35,10 +35,8 @@ const updatetransaction = async(req,res,next) => {
         const promise1= order.update({ paymentId: payment_id, status: "success" })
         const promise2= req.user.update({ ispremium: true })
         Promise.all([promise1,promise2]).then((result)=>{
-            const k= controller.generateToken(userId,req.user.Name,true)
-            console.log('k>>>>',k)
-            console.log("responmse>>>>",result)
-            return res.status(201).json({success:true,message:'transaction successfull',token:k})
+            const Token= controller.generateToken(userId,req.user.Name,true)
+            return res.status(201).json({success:true,message:'transaction successfull',token:Token})
         }).catch((err)=>{
             console.log(err)
         })

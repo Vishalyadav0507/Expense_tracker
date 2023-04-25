@@ -56,7 +56,6 @@ app.use(premiumRoute)
 app.use(forgotPasswordRoute)
 
 app.use((req,res)=>{
-    connsole.log(req.url)
     res.sendFile(path.join(__dirname,`frontend/${req.url}`))
 })
 

@@ -18,24 +18,27 @@
         <a href="./login.html">logout</a>
         <form class="card" style="margin-top: 30px; padding: 45px;" method="post" onsubmit="addItem(event)">
             <label for="">Enter Expense amount</label>
-            <input type="number" id="Number">
+            <input class="form-control" type="number" id="Number">
             <label for="">Expense Description:-</label>
-            <input type="text" id="Desc">
+            <input class="form-control" type="text" id="Desc">
             <label for="">catagory</label>
-            <select id="item">
+            <select class="form-control" style="margin-bottom: 10px;" id="item">
                 <option value="fuel">fuel</option>
                 <option value="food">food</option>
                 <option value="gloceries">gloceries</option>
                 <option value="vegtable">vegtable</option>
-            </select>
-            <button style="margin-top: 10px;" type="submit">add expense</button>
+            </select  >
+            <button class="btn btn-success" "type="submit">add expense</button>
         </form>
         <div>
             <h5 id="message"></h5>
         </div>
-        <button id="rzp-button">Buy Premium</button>
-        <button onclick="download()" id="download" style="visibility: hidden;">Download File</button>
+        <button id="rzp-button"class="btn btn-info" >Buy Premium</button>
+        <button onclick="download()" class="btn btn-outline-primary" id="download" style="visibility: hidden;">Download File</button>
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <div>
+            <ul id="leaderboard"></ul>
+        </div>
         <h2>your expenses</h2>
         <div>
             <ul id="itemList"></ul>
@@ -43,10 +46,7 @@
         <div>
             <div id='pagination'></div>
             <input id="limit" type="number">
-            <button onclick="setLimit(event)">search</button>
-        </div>
-        <div>
-            <ul id="leaderboard"></ul>
+            <button class="btn btn-info" onclick="setLimit(event)">search</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
