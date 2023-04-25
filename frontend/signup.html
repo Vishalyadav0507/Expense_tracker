@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,27 +8,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <title>signup page</title>
+    <title>Signup Page</title>
+    
 </head>
 <body>
-    <div style="padding-top: 50px;" class="container">
-        
-        <form style="padding: 50px;" id="form" class="card" onsubmit="signup(event)" >
-            <h3 style="text-align: center;">signup page</h3>
-            <nav class="nav">
-                <a class="nav-link active" href="./login.html">existing User login</a>
-              </nav
-        <label>Name:-</label>
-        <input type="text" id="Name" placeholder="Enter Name" required>
-        <label for="number">Enter Phone no.</label>
-        <input type="text" id="Number" placeholder="123456789" required>
-        <label>Email Id:-</label>
-        <input type="text" id="Email" placeholder="abc@gmail.com" required>
-        <label>Password</label>
-        <input type="password" id="Password" placeholder="password" required>
-        <button class="btn btn-success" style='margin-top: 10px;' type="submit" >submit</button>
-    </form>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Signup</h3>
+                        <form id="form" onsubmit="signup(event)">
+                            <div class="form-group mb-3">
+                                <label for="Name">Name</label>
+                                <input type="text" class="form-control" id="Name" placeholder="Enter Name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Number">Phone Number</label>
+                                <input type="text" class="form-control" id="Number" placeholder="123456789" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Email">Email</label>
+                                <input type="email" class="form-control" id="Email" placeholder="abc@gmail.com" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="Password">Password</label>
+                                <input type="password" class="form-control" id="Password" placeholder="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">signup</button>
+                        </form>
+                        <div class="text-center mt-3">
+                            <span>Already have an account? </span><a href="./login.html">Login here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="signup.js"></script>
-</div>
 </body>
 </html>

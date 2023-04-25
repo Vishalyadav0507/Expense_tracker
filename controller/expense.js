@@ -7,23 +7,6 @@ const S3Services = require('../services/s3services')
 const fileTable = require('../model/filestable')
 
 
-const download = async (req, res) => {
-    try {
-        const expenses = await UserServices.getExpenses(req)
-
-        const stringified = JSON.stringify(expenses);
-        const fileName = `expense${req.user.id}/${new Date()}.txt`;
-
-        const fileURL = await S3Services.uploadS3(stringified, fileName)
-        fileTable.create({ link: fileURL, userId: req.user.id })
-        res.status(201).json({ fileURL, success: true })
-
-    } catch (err) {
-        res.status(401).json({ success: false, err: err })
-    }
-
-};
-
 const postItem = async (req, res, next) => {
     try {
         const t = await sequelize.transaction()
@@ -51,6 +34,7 @@ const getItem = async (req, res) => {
 
         const page = +req.query.page || 1;
         const limit = +req.query.limit || 3
+        console.log(page,limit)
 
         const expenses = await expense.findAll({
             where: { userId: req.user.id }, offset: (page - 1) * limit,
@@ -58,7 +42,7 @@ const getItem = async (req, res) => {
         })
 
         const allData = await expense.findAll({ where: { userId: req.user.id } })
-        console.log('lenth>>>', allData.length)
+        
 
         res.status(201).json({
             expense: expenses, hasnextpage: (limit * page < allData.length),
@@ -95,6 +79,25 @@ const deleteItem = async (req, res, next) => {
         res.status(501).json({ err: "something went wrong" })
     }
 }
+
+const download = async (req, res) => {
+    try {
+        const expenses = await UserServices.getExpenses(req)
+
+        const stringified = JSON.stringify(expenses);
+        const fileName = `expense${req.user.id}/${new Date()}.txt`;
+
+        const fileURL = await S3Services.uploadS3(stringified, fileName)
+        fileTable.create({ link: fileURL, userId: req.user.id })
+        res.status(201).json({ fileURL, success: true })
+
+    } catch (err) {
+        res.status(401).json({ success: false, err: err })
+    }
+
+};
+
+
 module.exports = {
     postItem: postItem,
     getItem: getItem,

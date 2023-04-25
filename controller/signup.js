@@ -16,31 +16,26 @@ function generateToken(id,name,ispremium){
 }
 
 const signUp = async (req, res, next) => {
+
     try{
         const { Name, Number, Email, Password } = req.body;
         if (isstringvalidate(Name) || isstringvalidate(Email) || isstringvalidate(Password)) {
             return res.status(400).json({ err: "something is missing" })
         }
-        const findEmail=await User.findAll({where:{Email:Email}})
-        console.log("hiii",findEmail)
-        // if(findEmail.length>0){
-        //     const saltRounds=10;
-        //     bcrypt.hash(Password,saltRounds,async(err,hash)=>{
-        //     await User.create({ Name, Number, Email, Password:hash})
-        //     res.status(201).json({ message: "signUp successfully" })
-        // })
-        // }else{
-        //     res.status(401).json({err:"user already registered"})
-        // }
+        let check=await User.findAll({where:{Email:Email}})
+        if(check.length>0){
+            console.log(check)
+            return res.status(401).json("user already exist!")
+        }else{
             const saltRounds=10;
             bcrypt.hash(Password,saltRounds,async(err,hash)=>{
             await User.create({ Name, Number, Email, Password:hash})
             res.status(201).json({ message: "signUp successfully" })
         })
-
+    }
     }
     catch(err){
-        console.log("something>>>",err)
+        console.log("err>>>",err)
         res.status(500).json({ err: "something went wrong" })
     }
 }
@@ -49,6 +44,7 @@ const login = async (req, res, next) => {
     try {
         const { Email, Password } = req.body
         const isData = await User.findAll({ where: { Email: Email } })
+        
         if (isData){
             bcrypt.compare(Password,isData[0].Password,(err,result)=>{
                 if(result==true){
@@ -63,6 +59,7 @@ const login = async (req, res, next) => {
         }
     }
     catch (err) {
+        console.log("err",err)
         res.status(500).json({ message: "something went wrong" })
     }
 }

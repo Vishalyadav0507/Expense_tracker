@@ -5,11 +5,19 @@ const sequelize = require('../util/datbase')
 const getUserLeaderBoard=async(req,res,next)=>{
     try{
         const total_amount = await User.findAll({
-    
-            order:[['total_amount',"DESC"]]
+            attributes: ['id', 'name', [sequelize.fn('SUM', sequelize.col('expenses.amount')), 'total_expenses']],
+            include: [
+                {
+                    model: Expense,
+                    attributes: []
+                }
+            ],
+            group: ['User.id'],
+            order:[['total_expenses',"DESC"]]
         })
-        console.log(total_amount)
+        
         res.status(201).json(total_amount)
+        
     }catch(err){
         console.log(err)
         res.status(501).json({err:err})
